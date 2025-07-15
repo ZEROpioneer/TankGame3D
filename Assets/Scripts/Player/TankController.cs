@@ -1,0 +1,68 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TankController : MonoBehaviour
+{
+    [Header("移动设置")]
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 100f;
+    
+    [Header("射击设置")]
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float fireRate = 0.5f;
+    
+    private Rigidbody rb;
+    private float nextFireTime = 0f;
+    
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0, -0.5f, 0); // 降低重心，防止翻车
+    }
+    
+    void Update()
+    {
+        HandleMovement();
+        HandleRotation();
+        HandleShooting();
+    }
+    
+    void HandleMovement()
+    {
+        float moveInput = Input.GetAxis("Vertical");
+        Vector3 movement = transform.forward * moveInput * moveSpeed * Time.deltaTime;
+        transform.Translate(movement, Space.World);
+    }
+    
+    void HandleRotation()
+    {
+        float rotateInput = Input.GetAxis("Horizontal");
+        float rotation = rotateInput * rotationSpeed * Time.deltaTime;
+        transform.Rotate(0, rotation, 0);
+    }
+    
+    void HandleShooting()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextFireTime)
+        {
+            Shoot();
+            nextFireTime = Time.time + fireRate;
+        }
+    }
+    
+    void Shoot()
+    {
+        if (bulletPrefab != null && firePoint != null)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            // 给子弹添加向前的力
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            if (bulletRb != null)
+            {
+                bulletRb.velocity = firePoint.forward * 20f;
+            }
+        }
+    }
+}
