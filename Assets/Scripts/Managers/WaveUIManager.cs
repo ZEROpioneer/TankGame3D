@@ -16,6 +16,7 @@ public class WaveUIManager : MonoBehaviour
     // 进度条（波次产生进度）
     public Slider progressSlider;
     
+
     [Header("波次间隔提示")]
     public GameObject waveCompletePanel;
     public TextMeshProUGUI waveCompleteText;
@@ -54,6 +55,7 @@ public class WaveUIManager : MonoBehaviour
         
         // 初始化 UI
         UpdateWaveUI();
+
     }
     
     void Update()
@@ -62,6 +64,8 @@ public class WaveUIManager : MonoBehaviour
         {
             UpdateWaveUI();
         }
+        
+
         
         // 处理波次间隔倒计时
         if (isCountingDown)
@@ -78,7 +82,7 @@ public class WaveUIManager : MonoBehaviour
             }
         }
     }
-    
+   
     void UpdateWaveUI()
     {
         // 更新波次文本
@@ -94,6 +98,7 @@ public class WaveUIManager : MonoBehaviour
             int activeCount = enemySpawner.GetActiveEnemyCount();
             enemiesText.text = $"敌人: {activeCount}";
         }
+  
         
         // 更新进度文本和滑块
         if (progressText != null)
@@ -110,6 +115,8 @@ public class WaveUIManager : MonoBehaviour
             }
         }
     }
+    
+
     
     public void ShowWaveComplete(int completedWave)
     {
