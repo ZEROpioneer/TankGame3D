@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -21,6 +20,9 @@ public class EnemySpawner : MonoBehaviour
     private float nextSpawnTime = 0f;
     private bool waveActive = true;
     
+    // UI 管理器引用
+    private WaveUIManager waveUIManager;
+    
     void Start()
     {
         // 如果没有设置生成点，创建默认生成点
@@ -28,6 +30,9 @@ public class EnemySpawner : MonoBehaviour
         {
             CreateDefaultSpawnPoints();
         }
+        
+        // 查找 UI 管理器
+        waveUIManager = FindObjectOfType<WaveUIManager>();
         
         nextSpawnTime = Time.time + 2f; // 游戏开始2秒后开始生成
     }
@@ -109,11 +114,18 @@ public class EnemySpawner : MonoBehaviour
     
     void StartNextWave()
     {
+        int completedWave = currentWave;
         currentWave++;
         enemiesSpawnedThisWave = 0;
         waveActive = false;
         
         Debug.Log($"波次 {currentWave} 开始！");
+        
+        // 通知 UI 管理器波次完成
+        if (waveUIManager != null)
+        {
+            waveUIManager.ShowWaveComplete(completedWave);
+        }
         
         // 增加难度
         totalEnemiesPerWave += 2;
@@ -133,5 +145,26 @@ public class EnemySpawner : MonoBehaviour
     {
         // 当敌人被摧毁时调用此方法
         // 可以在这里添加得分逻辑
+    }
+    
+    // 为 UI 提供的公共方法
+    public int GetActiveEnemyCount()
+    {
+        return activeEnemies.Count;
+    }
+    
+    public int GetEnemiesSpawnedThisWave()
+    {
+        return enemiesSpawnedThisWave;
+    }
+    
+    public int GetTotalEnemiesPerWave()
+    {
+        return totalEnemiesPerWave;
+    }
+    
+    public bool IsWaveActive()
+    {
+        return waveActive;
     }
 }
