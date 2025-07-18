@@ -126,4 +126,5 @@ public class OverManager : MonoBehaviour
         // 重启场景
         SceneManager.LoadScene("GameScene"); 
     }
+    
 }

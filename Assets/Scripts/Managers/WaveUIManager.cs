@@ -15,6 +15,10 @@ public class WaveUIManager : MonoBehaviour
     public TextMeshProUGUI progressText;
     // 进度条（波次产生进度）
     public Slider progressSlider;
+    // 血量条
+    public Slider HealthSlider;
+    // 玩家
+    public HealthSystem Health;
     
 
     [Header("波次间隔提示")]
@@ -30,6 +34,7 @@ public class WaveUIManager : MonoBehaviour
     private CanvasGroup waveCompleteCanvasGroup;
     private float countdownTimer = 0f;
     private bool isCountingDown = false;
+    
     
     void Start()
     {
@@ -98,7 +103,14 @@ public class WaveUIManager : MonoBehaviour
             int activeCount = enemySpawner.GetActiveEnemyCount();
             enemiesText.text = $"敌人: {activeCount}";
         }
-  
+        // 更新血量
+        if (Health != null)
+        {
+            int currentHealth = Health.currentHealth;
+            int maxHealth = Health.maxHealth;
+            // Slider.value 是进度条当前值，范围是 [0, 1]
+            HealthSlider.value = (float)currentHealth / maxHealth;
+        }
         
         // 更新进度文本和滑块
         if (progressText != null)
