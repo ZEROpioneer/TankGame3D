@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("波次设置")]
     public int currentWave = 1;
     public float waveInterval = 10f;
+    public int ADDEnemies = 2;  // 递增敌人数
     
     private List<GameObject> activeEnemies = new List<GameObject>();
     private int enemiesSpawnedThisWave = 0;
@@ -128,7 +129,7 @@ public class EnemySpawner : MonoBehaviour
         }
         
         // 增加难度
-        totalEnemiesPerWave += 2;
+        totalEnemiesPerWave += ADDEnemies;
         spawnInterval = Mathf.Max(1f, spawnInterval - 0.1f);
         
         // 延迟开始下一波

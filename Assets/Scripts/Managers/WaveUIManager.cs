@@ -106,8 +106,8 @@ public class WaveUIManager : MonoBehaviour
         // 更新血量
         if (Health != null)
         {
-            int currentHealth = Health.currentHealth;
-            int maxHealth = Health.maxHealth;
+            float currentHealth = Health.currentHealth;
+            float maxHealth = Health.maxHealth;
             // Slider.value 是进度条当前值，范围是 [0, 1]
             HealthSlider.value = (float)currentHealth / maxHealth;
         }

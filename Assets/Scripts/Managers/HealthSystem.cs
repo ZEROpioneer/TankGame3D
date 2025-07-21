@@ -5,8 +5,8 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     [Header("生命值设置")]
-    public int maxHealth = 3;
-    public int currentHealth;
+    public float maxHealth = PlayerSetManager.CurrentMaxHealth;
+    public float currentHealth;
     
     [Header("效果设置")]
     public GameObject explosionEffect; // 爆炸特效预制体
@@ -21,7 +21,7 @@ public class HealthSystem : MonoBehaviour
     //GetComponent<HealthSystem>().TakeDamage() 调用；
     
     #endregion
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;  // 扣除血量
         

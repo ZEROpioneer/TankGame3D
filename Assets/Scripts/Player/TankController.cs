@@ -5,8 +5,8 @@ using UnityEngine;
 public class TankController : MonoBehaviour
 {
     [Header("移动设置")]
-    public float moveSpeed = 5f;
-    public float rotationSpeed = 100f;
+    public float moveSpeed = PlayerSetManager.CurrentMoveSpeed;
+    public float rotationSpeed = PlayerSetManager.CurrentRotateSpeed;
     
     [Header("射击设置")]
     public GameObject bulletPrefab;
@@ -16,10 +16,17 @@ public class TankController : MonoBehaviour
     private Rigidbody rb;
     private float nextFireTime = 0f;
     
+    //public Camera playerCamera;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, -0.5f, 0); // 降低重心，防止翻车
+        // 如果没有指定摄像机，尝试获取子物体中的摄像机
+        /*if (playerCamera == null)
+        {
+            playerCamera = GetComponentInChildren<Camera>();
+        }*/
     }
     
     void Update()
