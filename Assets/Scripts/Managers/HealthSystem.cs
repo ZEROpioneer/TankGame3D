@@ -5,7 +5,10 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     [Header("生命值设置")]
-    public float maxHealth = PlayerSetManager.CurrentMaxHealth;
+    // 空字段，实际逻辑不用它
+    [SerializeField] private float _moveSpeedPlaceholder; 
+    
+    public float maxHealth => PlayerSetManager.CurrentMaxHealth;
     public float currentHealth;
     
     [Header("效果设置")]

@@ -5,9 +5,11 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     [Header("子弹设置")]
-    public float speed = PlayerSetManager.CurrentShootSpeed;  // 子弹速度（米/秒）
-    public float lifeTime = PlayerSetManager.CurrentHealthInput;  // 子弹最大生存时间（秒）
-    public float damage = PlayerSetManager.Currentshootdamage;  // 子弹造成的伤害值
+    // 空字段，实际逻辑不用它
+    [SerializeField] private float _moveSpeedPlaceholder; 
+    public float speed => PlayerSetManager.CurrentShootSpeed;  // 子弹速度（米/秒）
+    public float lifeTime => PlayerSetManager.CurrentHealthInput;  // 子弹最大生存时间（秒）
+    public float damage => PlayerSetManager.Currentshootdamage;  // 子弹造成的伤害值
     
     void Start()
     {

@@ -5,8 +5,11 @@ using UnityEngine;
 public class TankController : MonoBehaviour
 {
     [Header("移动设置")]
-    public float moveSpeed = PlayerSetManager.CurrentMoveSpeed;
-    public float rotationSpeed = PlayerSetManager.CurrentRotateSpeed;
+    // 空字段，实际逻辑不用它
+    [SerializeField] private float _moveSpeedPlaceholder; 
+    
+    public float moveSpeed => PlayerSetManager.CurrentMoveSpeed;
+    public float rotationSpeed => PlayerSetManager.CurrentRotateSpeed;
     
     [Header("射击设置")]
     public GameObject bulletPrefab;
