@@ -7,7 +7,7 @@ public class EnemyBullet : MonoBehaviour
     [Header("敌人子弹设置")]
     public float speed = 20f;
     public float lifeTime = 5f;
-    public int damage = 1;
+    public int damage => CustomizeEnemySetManager.CurrentDamage;
     
     void Start()
     {

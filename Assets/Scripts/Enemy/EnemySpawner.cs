@@ -7,14 +7,14 @@ public class EnemySpawner : MonoBehaviour
     [Header("生成设置")]
     public GameObject enemyTankPrefab;
     public Transform[] spawnPoints;
-    public int maxEnemies = 5;
-    public float spawnInterval = 3f;
+    public int maxEnemies => CustomizeEnemySetManager.CurrentMaxEnemyCount;
+    public float spawnInterval => CustomizeEnemySetManager.CurrentSpawnInterval;
     public int totalEnemiesPerWave = 10;
-    
+     
     [Header("波次设置")]
     public int currentWave = 1;
     public float waveInterval = 10f;
-    public int ADDEnemies = 2;  // 递增敌人数
+    public int ADDEnemies => CustomizeEnemySetManager.CurrentEnemyIncrement;  // 递增敌人数
     
     private List<GameObject> activeEnemies = new List<GameObject>();
     private int enemiesSpawnedThisWave = 0;
@@ -116,6 +116,7 @@ public class EnemySpawner : MonoBehaviour
     void StartNextWave()
     {
         int completedWave = currentWave;
+        float currentspawnInterval = spawnInterval;  //spawnInterval 被限制，所以先获取初始值 然后用其他变量来控制该参数
         currentWave++;
         enemiesSpawnedThisWave = 0;
         waveActive = false;
@@ -130,7 +131,7 @@ public class EnemySpawner : MonoBehaviour
         
         // 增加难度
         totalEnemiesPerWave += ADDEnemies;
-        spawnInterval = Mathf.Max(1f, spawnInterval - 0.1f);
+        currentspawnInterval = Mathf.Max(1f, currentspawnInterval - 0.1f);
         
         // 延迟开始下一波
         Invoke("StartWave", waveInterval);

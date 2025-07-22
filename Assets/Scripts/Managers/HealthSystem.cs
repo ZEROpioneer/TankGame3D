@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
     [Header("生命值设置")]
-    // 空字段，实际逻辑不用它
-    [SerializeField] private float _moveSpeedPlaceholder; 
+    [Tooltip("是否强制使用自定义最大生命值（用于特殊单位）")]
+    public bool useCustomMaxHealth;
+    public float customMaxHealth;  // 自定义最大生命值（仅当useCustomMaxHealth为true时生效）
     
-    public float maxHealth => PlayerSetManager.CurrentMaxHealth;
+    // 实际使用的最大生命值（根据对象类型在初始化时获取）
+    public float maxHealth { get; private set; }
+    public float PlayermaxHealth  => PlayerSetManager.CurrentMaxHealth;
+    public float EnemymaxHealth => CustomizeEnemySetManager.CurrentMaxHealth;
     public float currentHealth;
     
     [Header("效果设置")]
@@ -16,55 +22,66 @@ public class HealthSystem : MonoBehaviour
     
     void Start()
     {
-        currentHealth = maxHealth;  // 初始化血量
+        // 初始化时根据对象类型获取对应最大生命值（仅执行一次）
+        InitializeMaxHealth();
+        currentHealth = maxHealth;  // 初始化当前血量
     }
 
-    #region 接受伤害函数
-    //函数对外开放（public），其他对象（比如子弹）可以通过
-    //GetComponent<HealthSystem>().TakeDamage() 调用；
-    
-    #endregion
+    /// <summary>
+    /// 仅在游戏开始时执行一次，根据对象类型获取最大生命值
+    /// </summary>
+    private void InitializeMaxHealth()
+    {
+        // 根据标签区分玩家和敌人，从对应设置脚本获取值
+        if (CompareTag("Player"))
+        {
+            // 玩家生命值仅在游戏开始时从PlayerSetManager获取一次
+            maxHealth = PlayermaxHealth;
+        }
+        else if (CompareTag("Enemy"))
+        {
+            // 敌人生命值仅在游戏开始时从EnemySetManager获取一次
+            maxHealth = EnemymaxHealth;
+        }
+
+    }
+
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;  // 扣除血量
+        currentHealth -= damage;
         
         if (currentHealth <= 0)
         {
-            Die();  // 血量为零死亡
+            Die();
         }
     }
 
-    #region 死亡逻辑处理
-    //
-
-    #endregion
     void Die()
     {
-        // 播放爆炸效果
         if (explosionEffect != null)
         {
             Instantiate(explosionEffect, transform.position, transform.rotation);
         }
         
-        // 如果是玩家，重新生成或游戏结束
         if (CompareTag("Player"))
         {
-            // 这里可以调用游戏管理器的玩家死亡处理
             Debug.Log("玩家死亡！");
-            
-            // 可以在这里调用 GameManager 的方法：GameManager.Instance.OnPlayerDead();
+            // 调用玩家死亡逻辑
+        }
+        else if (CompareTag("Enemy"))
+        {
+            Debug.Log("敌人死亡！");
+            // 调用敌人死亡逻辑
+        }
+        else
+        {
+            maxHealth = 3f; // 默认值
+            Debug.LogWarning($"对象 {gameObject.name} 未设置Player或Enemy标签，使用默认生命值");
         }
         
         Destroy(gameObject);
     }
 
-    #region 治疗函数
-
-    //治疗时将生命值加上指定数值；
-    //Mathf.Min() 保证血量不会超过最大生命值；
-    //这是为“回血道具”、“回血技能”留的接口。
-
-    #endregion
     public void Heal(int healAmount)
     {
         currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
