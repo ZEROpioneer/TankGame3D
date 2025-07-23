@@ -14,7 +14,7 @@ public class HealthSystem : MonoBehaviour
     // 实际使用的最大生命值（根据对象类型在初始化时获取）
     public float maxHealth { get; private set; }
     public float PlayermaxHealth  => PlayerSetManager.CurrentMaxHealth;
-    public float EnemymaxHealth => CustomizeEnemySetManager.CurrentMaxHealth;
+    //public float EnemymaxHealth = EnemyParameterManager.Instance.MaxHealth;
     public float currentHealth;
     
     [Header("效果设置")]
@@ -22,10 +22,17 @@ public class HealthSystem : MonoBehaviour
     
     void Start()
     {
-        // 初始化时根据对象类型获取对应最大生命值（仅执行一次）
-        InitializeMaxHealth();
-        currentHealth = maxHealth;  // 初始化当前血量
+        // 先等待 1 帧，确保 PlayerSetManager 已初始化（简单粗暴的方式）
+        StartCoroutine(DelayedInitializeMaxHealth());
     }
+
+    IEnumerator DelayedInitializeMaxHealth()
+    {
+        yield return null; // 等待一帧，让其他脚本先初始化
+        InitializeMaxHealth();
+        currentHealth = maxHealth;
+    }
+
 
     /// <summary>
     /// 仅在游戏开始时执行一次，根据对象类型获取最大生命值
@@ -37,11 +44,12 @@ public class HealthSystem : MonoBehaviour
         {
             // 玩家生命值仅在游戏开始时从PlayerSetManager获取一次
             maxHealth = PlayermaxHealth;
+            Debug.Log("玩家初始血量为"+maxHealth);
         }
         else if (CompareTag("Enemy"))
         {
             // 敌人生命值仅在游戏开始时从EnemySetManager获取一次
-            maxHealth = EnemymaxHealth;
+            maxHealth = EnemyParameterManager.Instance.MaxHealth;
         }
 
     }
@@ -49,7 +57,7 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        
+        Debug.Log("当前血量为"+currentHealth);
         if (currentHealth <= 0)
         {
             Die();
@@ -65,7 +73,7 @@ public class HealthSystem : MonoBehaviour
         
         if (CompareTag("Player"))
         {
-            Debug.Log("玩家死亡！");
+            Debug.Log("玩家死亡！"+currentHealth);
             // 调用玩家死亡逻辑
         }
         else if (CompareTag("Enemy"))
