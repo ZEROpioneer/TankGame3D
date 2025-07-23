@@ -9345,20 +9345,20 @@ MonoBehaviour:
   easySettings:
     maxEnemyCount: 3
     spawnInterval: 3
-    enemyIncrement: 1
-    maxHealth: 2
+    enemyIncrement: 2
+    maxHealth: 3
     damage: 1
   normalSettings:
     maxEnemyCount: 5
     spawnInterval: 2
-    enemyIncrement: 2
-    maxHealth: 3
+    enemyIncrement: 3
+    maxHealth: 5
     damage: 2
   hardSettings:
     maxEnemyCount: 8
     spawnInterval: 1
-    enemyIncrement: 3
-    maxHealth: 5
+    enemyIncrement: 4
+    maxHealth: 8
     damage: 3
   currentPanel: {fileID: 903341363}
   customizeEnemySetPanel: {fileID: 1412674774}

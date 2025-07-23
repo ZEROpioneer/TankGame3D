@@ -24,11 +24,13 @@ public class EnemySetManager : MonoBehaviour
     [Tooltip("简单难度参数")]
     public DifficultySettings easySettings = new DifficultySettings
     {
+        // 场景 / 预制体的序列化数据优先级高于代码默认值
+        // 所以会导致 Inspector 面板修改的参数 优先于代码中的
         maxEnemyCount = 3,
         spawnInterval = 2f,
         enemyIncrement = 2,
         maxHealth = 3,
-        damage = 1
+        damage = 1,
     };
 
     [Tooltip("中等难度参数")]
@@ -38,7 +40,7 @@ public class EnemySetManager : MonoBehaviour
         spawnInterval = 1f,
         enemyIncrement = 3,
         maxHealth = 5,
-        damage = 2
+        damage = 2,
     };
 
     [Tooltip("困难难度参数")]
@@ -48,7 +50,7 @@ public class EnemySetManager : MonoBehaviour
         spawnInterval = 0.5f,
         enemyIncrement = 5,
         maxHealth = 8,
-        damage = 3
+        damage = 3,
     };
 
     [Header("当前面板组件")]
@@ -119,7 +121,7 @@ public class EnemySetManager : MonoBehaviour
         }
 
         // 调试用：打印当前难度参数
-        Debug.Log($"选择{difficultyDropdown.options[index].text}难度：");
+        Debug.Log($"选择难度：{difficultyDropdown.options[index].text}");
         Debug.Log($"最大敌人数量：{CurrentDifficulty.maxEnemyCount}，生成间隔：{CurrentDifficulty.spawnInterval}");
         Debug.Log($"敌人增量：{CurrentDifficulty.enemyIncrement}，最大生命值：{CurrentDifficulty.maxHealth}，伤害：{CurrentDifficulty.damage}");
     }
