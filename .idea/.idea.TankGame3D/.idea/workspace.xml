@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0d6b15d4-73a1-4015-9798-f36fd929776f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TankGame3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TankGame3D/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/EnemySetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/EnemySetManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +17,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CustomizeEnemySetManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/EnemyParameterController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Minimap/MinimapFollow.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -106,7 +104,7 @@
       <workItem from="1753162734074" duration="1862000" />
       <workItem from="1753169055330" duration="9190000" />
       <workItem from="1753233814251" duration="9794000" />
-      <workItem from="1753246806272" duration="1854000" />
+      <workItem from="1753246806272" duration="3398000" />
     </task>
     <servers />
   </component>
